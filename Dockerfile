@@ -14,3 +14,6 @@ RUN apt-get update && apt-get install -y default-jre
 RUN apt-get update && apt-get install -y wget
 RUN wget https://github.com/OpenRefine/OpenRefine/releases/download/3.4.1/openrefine-linux-3.4.1.tar.gz
 RUN tar xzvf openrefine-linux-3.4.1.tar.gz
+
+# Expose port for OpenRefine
+EXPOSE 3333
