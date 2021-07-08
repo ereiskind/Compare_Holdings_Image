@@ -2,10 +2,14 @@ from pathlib import Path
 import tkinter
 from tkinter import ttk
 
+# The functions below are hanging at root.destroy() functions, closing the windows created by the code but not the initial (root?) window; closing the latter window with the red 'x' prompts the program to move on
+# The functions work when there's only print statements before and after, but not messageboxes; adding print statements between doesn't help
+#ToDo: Figure out what's going on
+
 def CreateJSONDisplay(JSON_file):
     """Creates a dialog box with a JSON that can be copied and a button for continuing on to the next part of the instructions."""
     root = tkinter.Tk()
-    JSON_file_path = Path('.', 'JSONs', JSON_file)
+    JSON_file_path = Path('Compare_Holdings_Image', 'JSONs', JSON_file)
 
     JSON_text = tkinter.Text(root)
     JSON_text.pack()
@@ -37,7 +41,7 @@ def RequestProjectNames(source):
         text=f"What is the name of the {source} project?"
     ).pack()
 
-    project_name = tkinter.Entry(root)
+    project_name = ttk.Entry(root)
     project_name.pack()
 
     continue_button = ttk.Button(
