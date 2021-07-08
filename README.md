@@ -1,5 +1,5 @@
 # Holdings Management/Alma Holdings Comparison Tool
-This Docker image contains a program to compare the holdings in a CSV downloaded from EBSCOadmin's Holdings Management and an Excel .xls file resulting from the extended export of a portfolio list in Alma. The image provides Python, which is used to run the program, but as the instructions are for using OpenRefine, the computer must also have OpenRefine to use the program. To download OpenRefine, go to https://openrefine.org/download.html.
+This repository contains a program to compare the holdings in a CSV downloaded from EBSCOadmin's Holdings Management and an Excel .xls file resulting from the extended export of a portfolio list in Alma. The program is effectively instructions for using OpenRefine, so the computer running the program must also have OpenRefine, which can be downloaded at https://openrefine.org/download.html.
 
 ## Directions
 1. Create the image with `docker build -t compare_holdings_image https://github.com/ereiskind/Compare_Holdings_Image.git#main`

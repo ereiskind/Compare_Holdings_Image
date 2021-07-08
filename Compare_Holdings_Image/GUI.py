@@ -1,5 +1,3 @@
-#! /usr/local/bin/python
-
 from pathlib import Path
 import tkinter
 from tkinter import ttk
