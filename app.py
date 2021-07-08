@@ -1,8 +1,7 @@
 #! /usr/local/bin/python
 
-import tkinter
 from tkinter import messagebox
-from tkinter import ttk
+import GUI
 
 #Section: Upload the Title Lists to OpenRefine
 messagebox.showinfo(title="Instructions: Upload the HM Title List", message="""
@@ -12,7 +11,7 @@ messagebox.showinfo(title="Instructions: Upload the HM Title List", message="""
 4. Upload the Excel file that downloaded to OpenRefine
 """)
 
-#ToDo: HM_project = GUI.RequestProjectNames("HM")
+HM_project = GUI.RequestProjectNames("HM")
 
 messagebox.showinfo(title="Instructions: Upload the Alma Title List", message="""
 1. Find the electronic collection in the institution zone
@@ -21,14 +20,14 @@ messagebox.showinfo(title="Instructions: Upload the Alma Title List", message=""
 4. Upload the Excel file that downloaded to OpenRefine
 """)
 
-#ToDo: Alma_project = GUI.RequestProjectNames("Alma")
+Alma_project = GUI.RequestProjectNames("Alma")
 
 
 #Section: Reformat the Title Lists
 messagebox.showinfo(title="Instructions: Reformat HM Title List", message="Copy the JSON in the next dialog box and apply it to the HM project in OpenRefine.")
-#ToDo: GUI.CreateJSONDisplay('Prepare_HM_Title_List.json')
+GUI.CreateJSONDisplay('Prepare_HM_Title_List.json')
 messagebox.showinfo(title="Instructions: Reformat Alma Title List", message="Copy the JSON in the next dialog box and apply it to the Alma project in OpenRefine.")
-#ToDo: GUI.CreateJSONDisplay('Prepare_Alma_Title_List.json')
+GUI.CreateJSONDisplay('Prepare_Alma_Title_List.json')
 
 
 #Section: Find Title Matches in the Two Projects
@@ -154,7 +153,7 @@ if messagebox.askyesno(title="Instructions", message="Switch to the Alma project
     if messagebox.askyesno(title="Instructions", message="Switch to the Alma project and set a blanks facet on column \"KBID\". Are there blank rows remaining?"):
         #Subsection: Find Remaining Matches via Title Matching
         messagebox.showinfo(title="Instructions: Find Title Matches", message="Copy the JSON in the next dialog box and apply it to the HM project in OpenRefine.")
-        #ToDo: GUI.CreateJSONDisplay('Find_Title_Matches_1.json')
+        GUI.CreateJSONDisplay('Find_Title_Matches_1.json')
         messagebox.showinfo(title="Instructions: Find Title Matches", message="Copy the JSON in the next dialog box and apply it to the Alma project in OpenRefine.")
         #ToDo: GUI.CreateJSONDisplay with Find_Title_Matches_2.json, f-string, Find_Title_Matches_3.json
         """
@@ -279,7 +278,7 @@ if messagebox.askyesno(title="Instructions", message="Switch to the Alma project
         ]
         """
         messagebox.showinfo(title="Instructions: Find Title Matches", message="Copy the JSON in the next dialog box and apply it to the HM project in OpenRefine.")
-        #ToDo: GUI.CreateJSONDisplay('Find_Title_Matches_4.json')
+        GUI.CreateJSONDisplay('Find_Title_Matches_4.json')
         messagebox.showinfo(title="Instructions: Find Title Matches", message="Copy the JSON in the next dialog box and apply it to the Alma project in OpenRefine.")
         #ToDo: GUI.CreateJSONDisplay with f-string
         """
@@ -323,8 +322,8 @@ if messagebox.askyesno(title="Instructions", message="Switch to the Alma project
             1. On \"Portfolio_ID\", set a blanks filter to true, then for each visible record, star the row with the title (and KBID) that matches the portfolio.
             2. Copy the JSONs in the next two dialog boxes and apply them to the Alma project in OpenRefine.
         """) #ToDo: Figure out why last item in Find_Title_Matches_5.json works only when it's the last item in a JSON
-        #ToDo: GUI.CreateJSONDisplay('Find_Title_Matches_5.json')
-        #ToDo: GUI.CreateJSONDisplay('Find_Title_Matches_6.json')
+        GUI.CreateJSONDisplay('Find_Title_Matches_5.json')
+        GUI.CreateJSONDisplay('Find_Title_Matches_6.json')
         messagebox.showinfo(title="Instructions: Find Title Matches", message="Copy the JSON in the next dialog box and apply it to the HM project in OpenRefine.")
         #ToDo: GUI.CreateJSONDisplay with f-string plus Move_Data_From_Temp.json
         """
