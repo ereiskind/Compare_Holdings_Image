@@ -1,0 +1,35 @@
+[
+    {
+        "op": "core/text-transform",
+        "engineConfig": {
+            "facets": [],
+            "mode": "record-based"
+        },
+        "columnName": "KBID",
+        "expression": "grel:if(filter(row.record.cells[\"KBID\"].value,ID,ID==row.record.cells[\"KBID\"].value[0]).length()==row.record.cells[\"KBID\"].value.length(),if(row.index-row.record.fromRowIndex==0,if(isError(row.record.cells[\"KBID\"].value[0]),row.record.cells[\"Portfolio_ID\"].value[0]+\"-\"+toString(row.index-row.record.fromRowIndex),row.record.cells[\"KBID\"].value[0]),row.record.cells[\"Portfolio_ID\"].value[0]+\"-\"+toString(row.index-row.record.fromRowIndex)),row.record.cells[\"Portfolio_ID\"].value[0]+\"-\"+toString(row.index-row.record.fromRowIndex))",
+        "onError": "keep-original",
+        "repeat": false,
+        "repeatCount": 10,
+        "description": "Change values in column ``KBID`` so if the ISSNs for a record all had the same KBID match, the KBID(s) appears in the first row of the record and all other rows have the record's portfolio ID and the number of the row in the record, but if the ISSNs in a record match to multiple KBID(s) or don't match to anything, all the rows in the record have the record's portfolio ID and the number of the row in the record"
+    },
+    {
+        "op": "core/text-transform",
+        "engineConfig": {
+            "facets": [],
+            "mode": "record-based"
+        },
+        "columnName": "KBID",
+        "expression": "grel:if(value.contains(\"-\"),null,value)",
+        "onError": "keep-original",
+        "repeat": false,
+        "repeatCount": 10,
+        "description": "Null values in ``KBID`` containing a hyphen"
+    },
+    {
+        "op": "core/multivalued-cell-join",
+        "columnName": "All ISSN",
+        "keyColumnName": "Portfolio_ID",
+        "separator": "|",
+        "description": "Combine all values in column ``All ISSN`` in the first row of the record divided by pipes"
+    }
+]

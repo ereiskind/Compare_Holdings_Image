@@ -1,0 +1,211 @@
+[
+    {
+        "op": "core/column-rename",
+        "oldColumnName": "PORTFOLIO_PID",
+        "newColumnName": "Portfolio_ID",
+        "description": "Rename column ``PORTFOLIO_PID`` to ``Portfolio_ID``"
+    },
+    {
+        "op": "core/column-rename",
+        "oldColumnName": "MMS",
+        "newColumnName": "MMS (Title ID)",
+        "description": "Rename column ``MMS`` to ``MMS (Title ID)``"
+    },
+    {
+        "op": "core/column-rename",
+        "oldColumnName": "TITLE",
+        "newColumnName": "Title",
+        "description": "Rename column ``TITLE`` to ``Title``"
+    },
+    {
+        "op": "core/column-rename",
+        "oldColumnName": "WARNINGS",
+        "newColumnName": "Other_Coverage_Notices",
+        "description": "Rename column ``WARNINGS`` to ``Other_Coverage_Notices``"
+    },
+    {
+        "op": "core/column-rename",
+        "oldColumnName": "PUBLISHER",
+        "newColumnName": "Publisher",
+        "description": "Rename column ``PUBLISHER`` to ``Publisher``"
+    },
+    {
+        "op": "core/column-rename",
+        "oldColumnName": "PARSER_PARAMETERS",
+        "newColumnName": "URL_Identifier",
+        "description": "Rename column ``PARSER_PARAMETERS`` to ``URL_Identifier``"
+    },
+    {
+        "op": "core/column-rename",
+        "oldColumnName": "ELECTRONIC_MATERIAL_TYPE",
+        "newColumnName": "Resource_Type",
+        "description": "Rename column ``ELECTRONIC_MATERIAL_TYPE`` to ``Resource_Type``"
+    },
+    {
+        "op": "core/column-rename",
+        "oldColumnName": "COVERAGE_STATEMENT",
+        "newColumnName": "Selected_Coverage_Statement",
+        "description": "Rename column COVERAGE_STATEMENT to Selected_Coverage_Statement"
+    },
+    {
+        "op": "core/column-addition",
+        "engineConfig": {
+            "facets": [],
+            "mode": "row-based"
+        },
+        "baseColumnName": "FROM_YEAR",
+        "expression": "grel:toDate(value+\"-\"+if(isNotNull(cells.FROM_MONTH.value),cells.FROM_MONTH.value,\"01\")+\"-\"+if(isNotNull(cells.FROM_DAY.value),cells.FROM_DAY.value,\"01\"))",
+        "onError": "set-to-blank",
+        "newColumnName": "Local_Start_Date",
+        "columnInsertIndex": 14,
+        "description": "Create column ``Local_Start_Date`` by combining the available year, month, and day columns for the local subscription start date as a date data type"
+    },
+    {
+        "op": "core/column-addition",
+        "engineConfig": {
+            "facets": [],
+            "mode": "row-based"
+        },
+        "baseColumnName": "TO_YEAR",
+        "expression": "grel:toDate(value+\"-\"+if(isNotNull(cells.TO_MONTH.value),cells.TO_MONTH.value,\"01\")+\"-\"+if(isNotNull(cells.TO_DAY.value),cells.TO_DAY.value,\"01\"))",
+        "onError": "set-to-blank",
+        "newColumnName": "Local_End_Date",
+        "columnInsertIndex": 16,
+        "description": "Create column ``Local_End_Date`` by combining the available year, month, and day columns for the local subscription end date as a date data type"
+    },
+    {
+        "op": "core/text-transform",
+        "engineConfig": {
+            "facets": [
+                {
+                    "type": "list",
+                    "name": "Local_Start_Date",
+                    "expression": "isBlank(value)",
+                    "columnName": "Local_Start_Date",
+                    "invert": false,
+                    "omitBlank": false,
+                    "omitError": false,
+                    "selection": [
+                        {
+                            "v": {
+                                "v": false,
+                                "l": "false"
+                            }
+                        }
+                    ],
+                    "selectBlank": false,
+                    "selectError": false
+                }
+            ],
+            "mode": "record-based"
+        },
+        "columnName": "Local_End_Date",
+        "expression": "grel:if(isNull(value),\"Present\",value)",
+        "onError": "keep-original",
+        "repeat": false,
+        "repeatCount": 10,
+        "description": "For titles that have a custom/local start date but no corresponding ending date, change the null values in column ``Local_End_Date``  to `Present`"
+    },
+    {
+        "op": "core/column-addition",
+        "engineConfig": {
+            "facets": [],
+            "mode": "row-based"
+        },
+        "baseColumnName": "PUBLICATION_DATE_OPERATOR",
+        "expression": "grel:if(isNull(value),null,if(value==\">\",\"Excludes the most recent \",\"Only the most recent \")+((cells.PUBLICATION_DATE_YEAR.value.toNumber()*12)+cells.PUBLICATION_DATE_MONTH.value.toNumber())+\" months\"+if(value.contains(\"=\"),\"(inclusive of today)\",\"\"))",
+        "onError": "set-to-blank",
+        "newColumnName": "Local_Embargo",
+        "columnInsertIndex": 29,
+        "description": "Create column ``Local_Embargo`` based off the columns for the embargo type and the years and months in the embargo for the local embargo length in months"
+    },
+    {
+        "op": "core/column-addition",
+        "engineConfig": {
+            "facets": [],
+            "mode": "row-based"
+        },
+        "baseColumnName": "GLOBAL_FROM_YEAR",
+        "expression": "grel:toDate(value+\"-\"+if(isNotNull(cells.GLOBAL_FROM_MONTH.value),cells.GLOBAL_FROM_MONTH.value,\"01\")+\"-\"+if(isNotNull(cells.GLOBAL_FROM_DAY.value),cells.GLOBAL_FROM_DAY.value,\"01\"))",
+        "onError": "set-to-blank",
+        "newColumnName": "Default_Start_Date",
+        "columnInsertIndex": 32,
+        "description": "Create column ``Default_Start_Date`` by combining the available year, month, and day columns for the default/global subscription start date as a date data type"
+    },
+    {
+        "op": "core/column-addition",
+        "engineConfig": {
+            "facets": [],
+            "mode": "row-based"
+        },
+        "baseColumnName": "GLOBAL_TO_YEAR",
+        "expression": "grel:toDate(value+\"-\"+if(isNotNull(cells.GLOBAL_TO_MONTH.value),cells.GLOBAL_TO_MONTH.value,\"01\")+\"-\"+if(isNotNull(cells.GLOBAL_TO_DAY.value),cells.GLOBAL_TO_DAY.value,\"01\"))",
+        "onError": "set-to-blank",
+        "newColumnName": "Default_End_Date",
+        "columnInsertIndex": 32,
+        "description": "Create column ``Default_End_Date`` by combining the available year, month, and day columns for the default/global subscription end date as a date data type"
+    },
+    {
+        "op": "core/text-transform",
+        "engineConfig": {
+            "facets": [],
+            "mode": "record-based"
+        },
+        "columnName": "Default_End_Date",
+        "expression": "grel:if(isNull(value),\"Present\",value)",
+        "onError": "keep-original",
+        "repeat": false,
+        "repeatCount": 10,
+        "description": "Change null values in column ``Default_End_Date``  to `Present`"
+    },
+    {
+        "op": "core/column-addition",
+        "engineConfig": {
+            "facets": [],
+            "mode": "row-based"
+        },
+        "baseColumnName": "GLOBAL_PUBLICATION_DATE_OPERATOR",
+        "expression": "grel:if(isNull(value),null,if(value==\">\",\"Excludes the most recent \",\"Only the most recent \")+((cells.GLOBAL_PUBLICATION_DATE_YEAR.value.toNumber()*12)+cells.GLOBAL_PUBLICATION_DATE_MONTH.value.toNumber())+\" months\"+if(value.contains(\"=\"),\"(inclusive of today)\",\"\"))",
+        "onError": "set-to-blank",
+        "newColumnName": "Default_Embargo",
+        "columnInsertIndex": 44,
+        "description": "Create column ``Default_Embargo`` based off the columns for the embargo type and the years and months in the embargo for the default/global embargo length in months"
+    },
+    {
+        "op": "core/column-reorder",
+        "columnNames": [
+            "Portfolio_ID",
+            "MMS (Title ID)",
+            "Title",
+            "ISSN",
+            "ISSN2",
+            "ISSN3",
+            "Local_Start_Date",
+            "Local_End_Date",
+            "Local_Embargo",
+            "Default_Start_Date",
+            "Default_End_Date",
+            "Default_Embargo",
+            "Selected_Coverage_Statement",
+            "Other_Coverage_Notices",
+            "Publisher",
+            "URL",
+            "URL_Identifier",
+            "Resource_Type"
+        ],
+        "description": "Reorder columns, removing unneeded columns"
+    },
+    {
+        "op": "core/transpose-columns-into-rows",
+        "combinedColumnName": "All ISSN",
+        "startColumnName": "ISSN",
+        "columnCount": 3,
+        "ignoreBlankCells": true,
+        "fillDown": false,
+        "prependColumnName": false,
+        "separator": ":",
+        "keyColumnName": null,
+        "valueColumnName": null,
+        "description": "Transpose all ISSN values into one new column named ``All ISSN``"
+    }
+]

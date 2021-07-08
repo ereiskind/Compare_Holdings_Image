@@ -1,0 +1,266 @@
+[
+    {
+        "op": "core/column-addition",
+        "engineConfig": {
+            "facets": [
+                {
+                    "type": "list",
+                    "name": "KBID",
+                    "expression": "isBlank(value)",
+                    "columnName": "KBID",
+                    "invert": false,
+                    "omitBlank": false,
+                    "omitError": false,
+                    "selection": [
+                        {
+                            "v": {
+                                "v": true,
+                                "l": "true"
+                            }
+                        }
+                    ],
+                    "selectBlank": false,
+                    "selectError": false
+                }
+            ],
+            "mode": "record-based"
+        },
+        "baseColumnName": "Title",
+        "expression": "value.replace(/[‘’‚‛‹›‚]/,\"\\'\").replace(/[“”«»„]/,\"\\\"\").trim()",
+        "onError": "set-to-blank",
+        "newColumnName": "All_1",
+        "columnInsertIndex": 5,
+        "description": "In records not matched to a HM record, create column ``All_1`` with the value of ``Title`` without smart quotes and trimmed for all records not already matched"
+    },
+    {
+        "op": "core/column-addition",
+        "engineConfig": {
+            "facets": [
+                {
+                    "type": "list",
+                    "name": "KBID",
+                    "expression": "isBlank(value)",
+                    "columnName": "KBID",
+                    "invert": false,
+                    "omitBlank": false,
+                    "omitError": false,
+                    "selection": [
+                        {
+                            "v": {
+                                "v": true,
+                                "l": "true"
+                            }
+                        }
+                    ],
+                    "selectBlank": false,
+                    "selectError": false
+                }
+            ],
+            "mode": "record-based"
+        },
+        "baseColumnName": "All_1",
+        "expression": "grel:value.split(\"(\")[0].split(\":\")[0].trim()",
+        "onError": "set-to-blank",
+        "newColumnName": "Alt_1",
+        "columnInsertIndex": 5,
+        "description": "In records not matched to a HM record, create column ``Alt_1`` with the value of ``All_1`` without subtitles or parenthetical"
+    },
+    {
+        "op": "core/column-addition",
+        "engineConfig": {
+            "facets": [
+                {
+                    "type": "list",
+                    "name": "KBID",
+                    "expression": "isBlank(value)",
+                    "columnName": "KBID",
+                    "invert": false,
+                    "omitBlank": false,
+                    "omitError": false,
+                    "selection": [
+                        {
+                            "v": {
+                                "v": true,
+                                "l": "true"
+                            }
+                        }
+                    ],
+                    "selectBlank": false,
+                    "selectError": false
+                }
+            ],
+            "mode": "record-based"
+        },
+        "baseColumnName": "All_1",
+        "expression": "grel:if(isNull(value.match(/^(The|the|An|an|A|a)\\s(.*)/)),value,value.match(/^(The|the|An|an|A|a)\\s(.*)/)[1])",
+        "onError": "set-to-blank",
+        "newColumnName": "All_2",
+        "columnInsertIndex": 5,
+        "description": "In records not matched to a HM record, create column ``All_2`` by removing `A`, `An`, and `The` from the beginning of `All_1`"
+    },
+    {
+        "op": "core/column-addition",
+        "engineConfig": {
+            "facets": [
+                {
+                    "type": "list",
+                    "name": "KBID",
+                    "expression": "isBlank(value)",
+                    "columnName": "KBID",
+                    "invert": false,
+                    "omitBlank": false,
+                    "omitError": false,
+                    "selection": [
+                        {
+                            "v": {
+                                "v": true,
+                                "l": "true"
+                            }
+                        }
+                    ],
+                    "selectBlank": false,
+                    "selectError": false
+                }
+            ],
+            "mode": "record-based"
+        },
+        "baseColumnName": "All_2",
+        "expression": "grel:value.split(\"(\")[0].split(\":\")[0].trim()",
+        "onError": "set-to-blank",
+        "newColumnName": "Alt_2",
+        "columnInsertIndex": 5,
+        "description": "In records not matched to a HM record, create column ``Alt_2`` with the value of ``All_2`` without subtitles or parenthetical"
+    },
+    {
+        "op": "core/column-addition",
+        "engineConfig": {
+            "facets": [
+                {
+                    "type": "list",
+                    "name": "KBID",
+                    "expression": "isBlank(value)",
+                    "columnName": "KBID",
+                    "invert": false,
+                    "omitBlank": false,
+                    "omitError": false,
+                    "selection": [
+                        {
+                            "v": {
+                                "v": true,
+                                "l": "true"
+                            }
+                        }
+                    ],
+                    "selectBlank": false,
+                    "selectError": false
+                }
+            ],
+            "mode": "record-based"
+        },
+        "baseColumnName": "All_2",
+        "expression": "value.replace(\"-\",\" \").replace(\"&\",\"And\").toTitlecase()",
+        "onError": "set-to-blank",
+        "newColumnName": "All_3",
+        "columnInsertIndex": 5,
+        "description": "In records not matched to a HM record, create column ``All_3`` with the value of ``All_2`` in titlecase with hyphens replaced by spaces and ampersands replaced by `And`"
+    },
+    {
+        "op": "core/column-addition",
+        "engineConfig": {
+            "facets": [
+                {
+                    "type": "list",
+                    "name": "KBID",
+                    "expression": "isBlank(value)",
+                    "columnName": "KBID",
+                    "invert": false,
+                    "omitBlank": false,
+                    "omitError": false,
+                    "selection": [
+                        {
+                            "v": {
+                                "v": true,
+                                "l": "true"
+                            }
+                        }
+                    ],
+                    "selectBlank": false,
+                    "selectError": false
+                }
+            ],
+            "mode": "record-based"
+        },
+        "baseColumnName": "All_3",
+        "expression": "grel:value.split(\"(\")[0].split(\":\")[0].trim()",
+        "onError": "set-to-blank",
+        "newColumnName": "Alt_3",
+        "columnInsertIndex": 5,
+        "description": "In records not matched to a HM record, create column ``Alt_3`` with the value of ``All_3`` without subtitles or parenthetical"
+    },
+    {
+        "op": "core/column-addition",
+        "engineConfig": {
+            "facets": [
+                {
+                    "type": "list",
+                    "name": "KBID",
+                    "expression": "isBlank(value)",
+                    "columnName": "KBID",
+                    "invert": false,
+                    "omitBlank": false,
+                    "omitError": false,
+                    "selection": [
+                        {
+                            "v": {
+                                "v": true,
+                                "l": "true"
+                            }
+                        }
+                    ],
+                    "selectBlank": false,
+                    "selectError": false
+                }
+            ],
+            "mode": "record-based"
+        },
+        "baseColumnName": "All_3",
+        "expression": "grel:value.replace(\".\",\"\").replace(\",\",\"\").trim()",
+        "onError": "set-to-blank",
+        "newColumnName": "All_4",
+        "columnInsertIndex": 5,
+        "description": "In records not matched to a HM record, create column ``All_4`` with the value of ``All_3`` without periods or commas"
+    },
+    {
+        "op": "core/column-addition",
+        "engineConfig": {
+            "facets": [
+                {
+                    "type": "list",
+                    "name": "KBID",
+                    "expression": "isBlank(value)",
+                    "columnName": "KBID",
+                    "invert": false,
+                    "omitBlank": false,
+                    "omitError": false,
+                    "selection": [
+                        {
+                            "v": {
+                                "v": true,
+                                "l": "true"
+                            }
+                        }
+                    ],
+                    "selectBlank": false,
+                    "selectError": false
+                }
+            ],
+            "mode": "record-based"
+        },
+        "baseColumnName": "All_4",
+        "expression": "grel:value.split(\"(\")[0].split(\":\")[0].trim()",
+        "onError": "set-to-blank",
+        "newColumnName": "Alt_4",
+        "columnInsertIndex": 5,
+        "description": "In records not matched to a HM record, create column ``Alt_4`` with the value of ``All_4`` without subtitles or parenthetical"
+    }
+]

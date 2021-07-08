@@ -1,0 +1,183 @@
+[
+    {
+        "op": "core/text-transform",
+        "engineConfig": {
+            "facets": [
+                {
+                    "type": "list",
+                    "name": "Portfolio_ID",
+                    "expression": "isBlank(value)",
+                    "columnName": "Portfolio_ID",
+                    "invert": false,
+                    "omitBlank": false,
+                    "omitError": false,
+                    "selection": [
+                        {
+                            "v": {
+                                "v": false,
+                                "l": "false"
+                            }
+                        }
+                    ],
+                    "selectBlank": false,
+                    "selectError": false
+                }
+            ],
+            "mode": "record-based"
+        },
+        "columnName": "All_Titles",
+        "expression": "null",
+        "onError": "keep-original",
+        "repeat": false,
+        "repeatCount": 10,
+        "description": "Null values in column ``All_Titles`` in records already matched to an Alma portfolio"
+    },
+    {
+        "op": "core/multivalued-cell-split",
+        "columnName": "All_Titles",
+        "keyColumnName": "KBID",
+        "mode": "separator",
+        "separator": "|",
+        "regex": false,
+        "description": "Split values in column ``All_Titles`` into new rows at pipes"
+    },
+    {
+        "op": "core/text-transform",
+        "engineConfig": {
+            "facets": [],
+            "mode": "record-based"
+        },
+        "columnName": "All_Titles",
+        "expression": "value.trim()",
+        "onError": "keep-original",
+        "repeat": false,
+        "repeatCount": 10,
+        "description": "Trim extra spaces from column ``All_Titles``"
+    },
+    {
+        "op": "core/column-addition",
+        "engineConfig": {
+            "facets": [],
+            "mode": "record-based"
+        },
+        "baseColumnName": "All_Titles",
+        "expression": "grel:value.trim().split(\"(\")[0].split(\":\")[0].trim()",
+        "onError": "set-to-blank",
+        "newColumnName": "Alt_Titles",
+        "columnInsertIndex": 5,
+        "description": "Create column ``Alt_Titles`` by removing subtitles and parenthetical from ``All_Titles``"
+    },
+    {
+        "op": "core/column-addition",
+        "engineConfig": {
+            "facets": [],
+            "mode": "record-based"
+        },
+        "baseColumnName": "All_Titles",
+        "expression": "value.replace(/[‘’‚‛‹›‚]/,\"\\'\").replace(/[“”«»„]/,\"\\\"\")",
+        "onError": "set-to-blank",
+        "newColumnName": "All_Titles_1",
+        "columnInsertIndex": 5,
+        "description": "Create column ``All_Titles_1`` by replacing smart quotes in column ``All_Titles``"
+    },
+    {
+        "op": "core/column-addition",
+        "engineConfig": {
+            "facets": [],
+            "mode": "record-based"
+        },
+        "baseColumnName": "Alt_Titles",
+        "expression": "value.replace(/[‘’‚‛‹›‚]/,\"\\'\").replace(/[“”«»„]/,\"\\\"\")",
+        "onError": "set-to-blank",
+        "newColumnName": "Alt_Titles_1",
+        "columnInsertIndex": 5,
+        "description": "Create column ``Alt_Titles_1`` by replacing smart quotes in column ``Alt_Titles``"
+    },
+    {
+        "op": "core/column-addition",
+        "engineConfig": {
+            "facets": [],
+            "mode": "record-based"
+        },
+        "baseColumnName": "All_Titles_1",
+        "expression": "grel:if(isNull(value.match(/^(The|the|An|an|A|a)\\s(.*)/)),value,value.match(/^(The|the|An|an|A|a)\\s(.*)/)[1])",
+        "onError": "set-to-blank",
+        "newColumnName": "All_Titles_2",
+        "columnInsertIndex": 5,
+        "description": "Create column ``All_Titles_2`` by removing `A`, `An`, and `The` from the beginning of ``All_Titles_1``"
+    },
+    {
+        "op": "core/column-addition",
+        "engineConfig": {
+            "facets": [],
+            "mode": "record-based"
+        },
+        "baseColumnName": "Alt_Titles_1",
+        "expression": "grel:if(isNull(value.match(/^(The|the|An|an|A|a)\\s(.*)/)),value,value.match(/^(The|the|An|an|A|a)\\s(.*)/)[1])",
+        "onError": "set-to-blank",
+        "newColumnName": "Alt_Titles_2",
+        "columnInsertIndex": 5,
+        "description": "Create column ``Alt_Titles_2`` by removing `A`, `An`, and `The` from the beginning of ``Alt_Titles_1``"
+    },
+    {
+        "op": "core/column-addition",
+        "engineConfig": {
+            "facets": [],
+            "mode": "record-based"
+        },
+        "baseColumnName": "All_Titles_2",
+        "expression": "value.replace(\"-\",\" \").replace(\"&\",\"And\").toTitlecase()",
+        "onError": "set-to-blank",
+        "newColumnName": "All_Titles_3",
+        "columnInsertIndex": 5,
+        "description": "Create column ``All_Titles_3`` by by changing ``All_Titles_2``so the titles are in titlecase with hyphens replaced by spaces and ampersands replaced by `And`"
+    },
+    {
+        "op": "core/column-addition",
+        "engineConfig": {
+            "facets": [],
+            "mode": "record-based"
+        },
+        "baseColumnName": "Alt_Titles_2",
+        "expression": "value.replace(\"-\",\" \").replace(\"&\",\"And\").toTitlecase()",
+        "onError": "set-to-blank",
+        "newColumnName": "Alt_Titles_3",
+        "columnInsertIndex": 5,
+        "description": "Create column ``Alt_Titles_3`` by by changing ``Alt_Titles_2``so the titles are in titlecase with hyphens replaced by spaces and ampersands replaced by `And`"
+    },
+    {
+        "op": "core/column-addition",
+        "engineConfig": {
+            "facets": [],
+            "mode": "record-based"
+        },
+        "baseColumnName": "All_Titles_3",
+        "expression": "grel:value.replace(\".\",\"\").replace(\",\",\"\").trim()",
+        "onError": "set-to-blank",
+        "newColumnName": "All_Titles_4",
+        "columnInsertIndex": 5,
+        "description": "Create column ``All_Titles_4`` by by changing ``All_Titles_3``to remove periods and commas"
+    },
+    {
+        "op": "core/column-addition",
+        "engineConfig": {
+            "facets": [],
+            "mode": "record-based"
+        },
+        "baseColumnName": "Alt_Titles_3",
+        "expression": "grel:value.replace(\".\",\"\").replace(\",\",\"\").trim()",
+        "onError": "set-to-blank",
+        "newColumnName": "Alt_Titles_4",
+        "columnInsertIndex": 5,
+        "description": "Create column ``Alt_Titles_4`` by by changing ``Alt_Titles_3``to remove periods and commas"
+    },
+    {
+        "op": "core/fill-down",
+        "engineConfig": {
+            "facets": [],
+            "mode": "record-based"
+        },
+        "columnName": "KBID",
+        "description": "Fill down cells in column ``KBID``"
+    }
+]

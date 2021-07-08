@@ -1,0 +1,63 @@
+[
+    {
+        "op": "core/column-removal",
+        "columnName": "Temp_Titles",
+        "description": "Remove column ``Temp_Titles``"
+    },
+    {
+        "op": "core/fill-down",
+        "engineConfig": {
+            "facets": [],
+            "mode": "row-based"
+        },
+        "columnName": "Portfolio_ID",
+        "description": "Fill down cells in column ``Portfolio_ID``"
+    },
+    {
+        "op": "core/row-removal",
+        "engineConfig": {
+            "facets": [
+                {
+                    "type": "list",
+                    "name": "Order",
+                    "expression": "facetCount(value, 'value', 'Order') > 1",
+                    "columnName": "Order",
+                    "invert": false,
+                    "omitBlank": false,
+                    "omitError": false,
+                    "selection": [
+                        {
+                            "v": {
+                                "v": true,
+                                "l": "true"
+                            }
+                        }
+                    ],
+                    "selectBlank": false,
+                    "selectError": false
+                },
+                {
+                    "type": "list",
+                    "name": "Starred Rows",
+                    "expression": "row.starred",
+                    "columnName": "",
+                    "invert": false,
+                    "omitBlank": false,
+                    "omitError": false,
+                    "selection": [
+                        {
+                            "v": {
+                                "v": false,
+                                "l": "false"
+                            }
+                        }
+                    ],
+                    "selectBlank": false,
+                    "selectError": false
+                }
+            ],
+            "mode": "row-based"
+        },
+        "description": "Remove rows representing portfolios matched to multiple KBIDs with the incorrect KBID"
+    }
+]

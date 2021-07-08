@@ -1,0 +1,15 @@
+[
+    {
+        "op": "core/text-transform",
+        "engineConfig": {
+            "facets": [],
+            "mode": "record-based"
+        },
+        "columnName": "URL_Identifier",
+        "expression": "grel:value.match(/jkey=(.*)/)[0].unescape(\"url\")",
+        "onError": "keep-original",
+        "repeat": false,
+        "repeatCount": 10,
+        "description": "Remove parameter key `jkey` and unescape URL encodings in column ``URL_Identifier``"
+    }
+]

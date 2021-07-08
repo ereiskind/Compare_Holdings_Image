@@ -1,0 +1,608 @@
+[
+    {
+        "op": "core/text-transform",
+        "engineConfig": {
+            "facets": [],
+            "mode": "record-based"
+        },
+        "columnName": "Title_KBID",
+        "expression": "grel:if(isNotNull(cells.KBID.value),cells.KBID.value,value)",
+        "onError": "keep-original",
+        "repeat": false,
+        "repeatCount": 10,
+        "description": "Add values in column ``KBID`` to column ``Title_KBID``"
+    },
+    {
+        "op": "core/text-transform",
+        "engineConfig": {
+            "facets": [
+                {
+                    "type": "list",
+                    "name": "KBID",
+                    "expression": "isBlank(value)",
+                    "columnName": "KBID",
+                    "invert": false,
+                    "omitBlank": false,
+                    "omitError": false,
+                    "selection": [
+                        {
+                            "v": {
+                                "v": true,
+                                "l": "true"
+                            }
+                        }
+                    ],
+                    "selectBlank": false,
+                    "selectError": false
+                },
+                {
+                    "type": "list",
+                    "name": "Title_KBID",
+                    "expression": "grel:value.contains(\"|\")",
+                    "columnName": "Title_KBID",
+                    "invert": false,
+                    "omitBlank": false,
+                    "omitError": false,
+                    "selection": [
+                        {
+                            "v": {
+                                "v": false,
+                                "l": "false"
+                            }
+                        }
+                    ],
+                    "selectBlank": false,
+                    "selectError": false
+                },
+                {
+                    "type": "list",
+                    "name": "Title_KBID",
+                    "expression": "facetCount(value, 'value', 'Title_KBID') > 1",
+                    "columnName": "Title_KBID",
+                    "invert": false,
+                    "omitBlank": false,
+                    "omitError": false,
+                    "selection": [
+                        {
+                            "v": {
+                                "v": false,
+                                "l": "false"
+                            }
+                        }
+                    ],
+                    "selectBlank": false,
+                    "selectError": false
+                }
+            ],
+            "mode": "record-based"
+        },
+        "columnName": "KBID",
+        "expression": "grel:cells.Title_KBID.value",
+        "onError": "keep-original",
+        "repeat": false,
+        "repeatCount": 10,
+        "description": "In records with no KBID, if ``Title_KBID`` is a single unique KBID, add the ``Title_KBID`` value to ``KBID``"
+    },
+    {
+        "op": "core/text-transform",
+        "engineConfig": {
+            "facets": [],
+            "mode": "record-based"
+        },
+        "columnName": "All_1",
+        "expression": "grel:split(if(isNull(value),\"\",value)+if(isNull(cells.All_2.value),\"\",\"|\"+cells.All_2.value)+if(isNull(cells.All_3.value),\"\",\"|\"+cells.All_3.value)+if(isNull(cells.All_4.value),\"\",\"|\"+cells.All_4.value),\"|\").uniques().join(\"|\")",
+        "onError": "keep-original",
+        "repeat": false,
+        "repeatCount": 10,
+        "description": "Move all KBIDs found by matching titles with subtitles to column ``All_1``, keeping the KBIDs separated by pipes"
+    },
+    {
+        "op": "core/column-removal",
+        "columnName": "All_2",
+        "description": "Remove column ``All_2``"
+    },
+    {
+        "op": "core/column-removal",
+        "columnName": "All_3",
+        "description": "Remove column ``All_3``"
+    },
+    {
+        "op": "core/column-removal",
+        "columnName": "All_4",
+        "description": "Remove column ``All_4``"
+    },
+    {
+        "op": "core/text-transform",
+        "engineConfig": {
+            "facets": [],
+            "mode": "record-based"
+        },
+        "columnName": "All_1",
+        "expression": "grel:if(isNotNull(cells.KBID.value),cells.KBID.value,value)",
+        "onError": "keep-original",
+        "repeat": false,
+        "repeatCount": 10,
+        "description": "Add values in column ``KBID`` to column ``All_1``"
+    },
+    {
+        "op": "core/text-transform",
+        "engineConfig": {
+            "facets": [
+                {
+                    "type": "list",
+                    "name": "KBID",
+                    "expression": "isBlank(value)",
+                    "columnName": "KBID",
+                    "invert": false,
+                    "omitBlank": false,
+                    "omitError": false,
+                    "selection": [
+                        {
+                            "v": {
+                                "v": true,
+                                "l": "true"
+                            }
+                        }
+                    ],
+                    "selectBlank": false,
+                    "selectError": false
+                },
+                {
+                    "type": "list",
+                    "name": "All_1",
+                    "expression": "facetCount(value, 'value', 'All_1') > 1",
+                    "columnName": "All_1",
+                    "invert": false,
+                    "omitBlank": false,
+                    "omitError": false,
+                    "selection": [
+                        {
+                            "v": {
+                                "v": false,
+                                "l": "false"
+                            }
+                        }
+                    ],
+                    "selectBlank": false,
+                    "selectError": false
+                },
+                {
+                    "type": "list",
+                    "name": "All_1",
+                    "expression": "grel:value.contains(\"|\")",
+                    "columnName": "All_1",
+                    "invert": false,
+                    "omitBlank": false,
+                    "omitError": false,
+                    "selection": [
+                        {
+                            "v": {
+                                "v": false,
+                                "l": "false"
+                            }
+                        }
+                    ],
+                    "selectBlank": false,
+                    "selectError": false
+                }
+            ],
+            "mode": "record-based"
+        },
+        "columnName": "KBID",
+        "expression": "grel:cells.All_1.value",
+        "onError": "keep-original",
+        "repeat": false,
+        "repeatCount": 10,
+        "description": "In records with no KBID, if ``All_1`` is a single unique KBID, add the ``All_1`` value to ``KBID``"
+    },
+    {
+        "op": "core/text-transform",
+        "engineConfig": {
+            "facets": [],
+            "mode": "record-based"
+        },
+        "columnName": "Alt_1",
+        "expression": "grel:split(if(isNull(value),\"\",value)+if(isNull(cells.Alt_2.value),\"\",\"|\"+cells.Alt_2.value)+if(isNull(cells.Alt_3.value),\"\",\"|\"+cells.Alt_3.value)+if(isNull(cells.Alt_4.value),\"\",\"|\"+cells.Alt_4.value),\"|\").uniques().join(\"|\")",
+        "onError": "keep-original",
+        "repeat": false,
+        "repeatCount": 10,
+        "description": "Move all KBIDs found by matching titles without subtitles to column ``Alt_1``, keeping the KBIDs separated by pipes"
+    },
+    {
+        "op": "core/column-removal",
+        "columnName": "Alt_2",
+        "description": "Remove column Alt_2"
+    },
+    {
+        "op": "core/column-removal",
+        "columnName": "Alt_3",
+        "description": "Remove column Alt_3"
+    },
+    {
+        "op": "core/column-removal",
+        "columnName": "Alt_4",
+        "description": "Remove column Alt_4"
+    },
+    {
+        "op": "core/text-transform",
+        "engineConfig": {
+            "facets": [],
+            "mode": "record-based"
+        },
+        "columnName": "Alt_1",
+        "expression": "grel:if(isNotNull(cells.KBID.value),cells.KBID.value,value)",
+        "onError": "keep-original",
+        "repeat": false,
+        "repeatCount": 10,
+        "description": "Add values in column ``KBID`` to column ``Alt_1``"
+    },
+    {
+        "op": "core/text-transform",
+        "engineConfig": {
+            "facets": [
+                {
+                    "type": "list",
+                    "name": "KBID",
+                    "expression": "isBlank(value)",
+                    "columnName": "KBID",
+                    "invert": false,
+                    "omitBlank": false,
+                    "omitError": false,
+                    "selection": [
+                        {
+                            "v": {
+                                "v": true,
+                                "l": "true"
+                            }
+                        }
+                    ],
+                    "selectBlank": false,
+                    "selectError": false
+                },
+                {
+                    "type": "list",
+                    "name": "Alt_1",
+                    "expression": "facetCount(value, 'value', 'Alt_1') > 1",
+                    "columnName": "Alt_1",
+                    "invert": false,
+                    "omitBlank": false,
+                    "omitError": false,
+                    "selection": [
+                        {
+                            "v": {
+                                "v": false,
+                                "l": "false"
+                            }
+                        }
+                    ],
+                    "selectBlank": false,
+                    "selectError": false
+                },
+                {
+                    "type": "list",
+                    "name": "Alt_1",
+                    "expression": "grel:value.contains(\"|\")",
+                    "columnName": "Alt_1",
+                    "invert": false,
+                    "omitBlank": false,
+                    "omitError": false,
+                    "selection": [
+                        {
+                            "v": {
+                                "v": false,
+                                "l": "false"
+                            }
+                        }
+                    ],
+                    "selectBlank": false,
+                    "selectError": false
+                }
+            ],
+            "mode": "record-based"
+        },
+        "columnName": "KBID",
+        "expression": "grel:cells.Alt_1.value",
+        "onError": "keep-original",
+        "repeat": false,
+        "repeatCount": 10,
+        "description": "In records with no KBID, if ``Alt_1`` is a single unique KBID, add the ``Alt_1`` value to ``KBID``"
+    },
+    {
+        "op": "core/column-addition",
+        "engineConfig": {
+            "facets": [],
+            "mode": "record-based"
+        },
+        "baseColumnName": "Portfolio_ID",
+        "expression": "grel:row.record.index",
+        "onError": "set-to-blank",
+        "newColumnName": "Order",
+        "columnInsertIndex": 1,
+        "description": "Create column ``Order`` with the number of the record in the project"
+    },
+    {
+        "op": "core/column-addition",
+        "engineConfig": {
+            "facets": [],
+            "mode": "record-based"
+        },
+        "baseColumnName": "Title_KBID",
+        "expression": "grel:if(isNotNull(cells.KBID.value),cells.KBID.value,if(isBlank(value),if(isBlank(cells.All_1.value),if(isBlank(cells.Alt_1.value),\"null-\"+cells.Order.value,cells.Alt_1.value),cells.All_1.value),value))",
+        "onError": "set-to-blank",
+        "newColumnName": "Temp",
+        "columnInsertIndex": 0,
+        "description": "Create column ``Temp`` as new starting column with KBIDs taken from the ``KBID``, ``Title_KBID``, ``All_1``, and ``Alt_1`` columns in that order with records still lacking a KBID value getting `null-` and the number of the record in the project"
+    },
+    {
+        "op": "core/column-removal",
+        "columnName": "Title_KBID",
+        "description": "Remove column ``Title_KBID``"
+    },
+    {
+        "op": "core/column-removal",
+        "columnName": "All_1",
+        "description": "Remove column All_1"
+    },
+    {
+        "op": "core/column-removal",
+        "columnName": "Alt_1",
+        "description": "Remove column Alt_1"
+    },
+    {
+        "op": "core/row-reorder",
+        "mode": "record-based",
+        "sorting": {
+            "criteria": [
+                {
+                    "valueType": "string",
+                    "column": "Temp",
+                    "blankPosition": 2,
+                    "errorPosition": 1,
+                    "reverse": false,
+                    "caseSensitive": false
+                }
+            ]
+        },
+        "description": "Reorder rows based on ``Temp``"
+    },
+    {
+        "op": "core/blank-down",
+        "engineConfig": {
+            "facets": [],
+            "mode": "row-based"
+        },
+        "columnName": "Temp",
+        "description": "Blank down cells in column ``Temp``"
+    },
+    {
+        "op": "core/text-transform",
+        "engineConfig": {
+            "facets": [
+                {
+                    "type": "list",
+                    "name": "KBID",
+                    "expression": "isBlank(value)",
+                    "columnName": "KBID",
+                    "invert": true,
+                    "omitBlank": false,
+                    "omitError": false,
+                    "selection": [
+                        {
+                            "v": {
+                                "v": false,
+                                "l": "false"
+                            }
+                        }
+                    ],
+                    "selectBlank": false,
+                    "selectError": false
+                }
+            ],
+            "mode": "record-based"
+        },
+        "columnName": "KBID",
+        "expression": "grel:if(row.index-row.record.fromRowIndex==0,if(or(cells.Temp.value.contains(\"|\"),cells.Temp.value.contains(\"-\")),value,cells.Temp.value),value)",
+        "onError": "keep-original",
+        "repeat": false,
+        "repeatCount": 10,
+        "description": "In records where ``KBID`` is null in all rows, if ``Temp`` is a single KBID, add that KBID to ``KBID``"
+    },
+    {
+        "op": "core/text-transform",
+        "engineConfig": {
+            "facets": [
+                {
+                    "type": "list",
+                    "name": "KBID",
+                    "expression": "isBlank(value)",
+                    "columnName": "KBID",
+                    "invert": false,
+                    "omitBlank": false,
+                    "omitError": false,
+                    "selection": [
+                        {
+                            "v": {
+                                "v": false,
+                                "l": "false"
+                            }
+                        }
+                    ],
+                    "selectBlank": false,
+                    "selectError": false
+                },
+                {
+                    "type": "list",
+                    "name": "KBID",
+                    "expression": "isBlank(value)",
+                    "columnName": "KBID",
+                    "invert": false,
+                    "omitBlank": false,
+                    "omitError": false,
+                    "selection": [
+                        {
+                            "v": {
+                                "v": true,
+                                "l": "true"
+                            }
+                        }
+                    ],
+                    "selectBlank": false,
+                    "selectError": false
+                }
+            ],
+            "mode": "record-based"
+        },
+        "columnName": "KBID",
+        "expression": "grel:row.record.cells[\"KBID\"].value[0]",
+        "onError": "keep-original",
+        "repeat": false,
+        "repeatCount": 10,
+        "description": "In records where only some rows have values in ``KBID``, fill up and down values in column ``KBID``"
+    },
+    {
+        "op": "core/text-transform",
+        "engineConfig": {
+            "facets": [],
+            "mode": "record-based"
+        },
+        "columnName": "Temp",
+        "expression": "grel:if(filter(row.record.cells[\"Temp\"].value,bool,bool.contains(\"|\")).length()>0,row.record.cells[\"Temp\"].value[0],cells.Order.value)",
+        "onError": "keep-original",
+        "repeat": false,
+        "repeatCount": 10,
+        "description": "In column ``Temp``, in records with multiple KBIDs separated by pipes, fill up and down the KBIDs, otherwise, replace with the value in ``Order``"
+    },
+    {
+        "op": "core/row-reorder",
+        "mode": "record-based",
+        "sorting": {
+            "criteria": [
+                {
+                    "valueType": "number",
+                    "column": "Order",
+                    "blankPosition": 2,
+                    "errorPosition": 1,
+                    "reverse": false
+                }
+            ]
+        },
+        "description": "Reorder rows based on ``Order``"
+    },
+    {
+        "op": "core/column-reorder",
+        "columnNames": [
+            "Portfolio_ID",
+            "Order",
+            "KBID",
+            "MMS (Title ID)",
+            "Title",
+            "All ISSN",
+            "Local_Start_Date",
+            "Local_End_Date",
+            "Local_Embargo",
+            "Default_Start_Date",
+            "Default_End_Date",
+            "Default_Embargo",
+            "Selected_Coverage_Statement",
+            "Publisher",
+            "URL",
+            "URL_Identifier",
+            "Resource_Type",
+            "Temp"
+        ],
+        "description": "Reorder columns to put ``Portfolio_ID`` first and ``Temp`` last"
+    },
+    {
+        "op": "core/column-split",
+        "engineConfig": {
+            "facets": [
+                {
+                    "type": "list",
+                    "name": "Temp",
+                    "expression": "grel:isNumeric(value)",
+                    "columnName": "Temp",
+                    "invert": false,
+                    "omitBlank": false,
+                    "omitError": false,
+                    "selection": [
+                        {
+                            "v": {
+                                "v": false,
+                                "l": "false"
+                            }
+                        }
+                    ],
+                    "selectBlank": false,
+                    "selectError": false
+                }
+            ],
+            "mode": "record-based"
+        },
+        "columnName": "Temp",
+        "guessCellType": false,
+        "removeOriginalColumn": true,
+        "mode": "separator",
+        "separator": "|",
+        "regex": false,
+        "maxColumns": 0,
+        "description": "In records with multiple possible KBID matches, split those KBIDs in column ``Temp`` at pipes into new columns"
+    },
+    {
+        "op": "core/transpose-columns-into-rows",
+        "combinedColumnName": "Temp",
+        "startColumnName": "Temp 1",
+        "columnCount": -1,
+        "ignoreBlankCells": true,
+        "fillDown": true,
+        "prependColumnName": false,
+        "separator": ":",
+        "keyColumnName": null,
+        "valueColumnName": null,
+        "description": "Pivot all the columns created by separating ``Temp`` into a new column named ``Temp`` with any newly created rows getting data via filling down"
+    },
+    {
+        "op": "core/text-transform",
+        "engineConfig": {
+            "facets": [],
+            "mode": "record-based"
+        },
+        "columnName": "Temp",
+        "expression": "grel:if(isNull(value),\"z-\"+cells.Order.value,value)",
+        "onError": "keep-original",
+        "repeat": false,
+        "repeatCount": 10,
+        "description": "Fill null cells in column ``Temp`` with `z`, a hyphen, and the value from ``Order``"
+    },
+    {
+        "op": "core/column-move",
+        "columnName": "Temp",
+        "index": 1,
+        "description": "Move column ``Temp`` to right after ``Portfolio_ID``"
+    },
+    {
+        "op": "core/row-reorder",
+        "mode": "record-based",
+        "sorting": {
+            "criteria": [
+                {
+                    "valueType": "string",
+                    "column": "Portfolio_ID",
+                    "blankPosition": 2,
+                    "errorPosition": 1,
+                    "reverse": false,
+                    "caseSensitive": false
+                }
+            ]
+        },
+        "description": "Reorder rows based on ``Portfolio_ID``"
+    },
+    {
+        "op": "core/blank-down",
+        "engineConfig": {
+            "facets": [],
+            "mode": "row-based"
+        },
+        "columnName": "Portfolio_ID",
+        "description": "Blank down cells in column ``Portfolio_ID``"
+    }
+]

@@ -1,0 +1,133 @@
+[
+    {
+        "op": "core/column-addition",
+        "engineConfig": {
+            "facets": [],
+            "mode": "record-based"
+        },
+        "baseColumnName": "HM_Local_Start_Date",
+        "expression": "grel:if(isNull(value),cells.HM_Default_Start_Date.value,value)",
+        "onError": "set-to-blank",
+        "newColumnName": "EBSCO_Holdings_Start_Date",
+        "columnInsertIndex": 7,
+        "description": "Create column ``EBSCO_Holdings_Start_Date`` with the EBSCO custom/local holdings start date if there is one or the default holdings start date if there isn't"
+    },
+    {
+        "op": "core/column-addition",
+        "engineConfig": {
+            "facets": [],
+            "mode": "record-based"
+        },
+        "baseColumnName": "Selected_Coverage_Statement",
+        "expression": "grel:if(or(value==\"Global and local\",value==\"Global or local\"),if(cells.Default_Start_Date.value==cells.Local_Start_Date.value,cells.Default_Start_Date.value,cells.Default_Start_Date.value+\"|\"+cells.Local_Start_Date.value),if(value==\"Only local\",cells.Local_Start_Date.value,cells.Default_Start_Date.value))",
+        "onError": "set-to-blank",
+        "newColumnName": "Alma_Holdings_Start_Date",
+        "columnInsertIndex": 8,
+        "description": "Create column ``Alma_Holdings_Start_Date`` with the Alma custom/local and/or default/global holdings start date based on the ``Selected_Coverage_Statement`` value for the row, separating the dates with a pipe if both dates are indicated and the dates aren't the same"
+    },
+    {
+        "op": "core/column-addition",
+        "engineConfig": {
+            "facets": [],
+            "mode": "record-based"
+        },
+        "baseColumnName": "HM_Local_End_Date",
+        "expression": "grel:if(isNull(value),cells.HM_Default_End_Date.value,value)",
+        "onError": "set-to-blank",
+        "newColumnName": "EBSCO_Holdings_End_Date",
+        "columnInsertIndex": 9,
+        "description": "Create column ``EBSCO_Holdings_End_Date`` with the EBSCO custom/local holdings start date if there is one or the default/global holdings start date if there isn't"
+    },
+    {
+        "op": "core/column-addition",
+        "engineConfig": {
+            "facets": [],
+            "mode": "record-based"
+        },
+        "baseColumnName": "Selected_Coverage_Statement",
+        "expression": "grel:if(or(value==\"Global and local\",value==\"Global or local\"),if(cells.Default_End_Date.value==cells.Local_End_Date.value,cells.Default_End_Date.value,cells.Default_End_Date.value+\"|\"+cells.Local_End_Date.value),if(value==\"Only local\",cells.Local_End_Date.value,cells.Default_End_Date.value))",
+        "onError": "set-to-blank",
+        "newColumnName": "Alma_Holdings_End_Date",
+        "columnInsertIndex": 10,
+        "description": "Create column ``Alma_Holdings_End_Date`` with the Alma custom/local and/or default/global holdings end date based on the ``Selected_Coverage_Statement`` value for the row, separating the dates with a pipe if both are in the cell"
+    },
+    {
+        "op": "core/text-transform",
+        "engineConfig": {
+            "facets": [
+                {
+                    "type": "list",
+                    "name": "Other_Coverage_Notices",
+                    "expression": "value",
+                    "columnName": "Other_Coverage_Notices",
+                    "invert": false,
+                    "omitBlank": false,
+                    "omitError": false,
+                    "selection": [
+                        {
+                            "v": {
+                                "v": "Exports only the first coverage of the multiple coverages defined",
+                                "l": "Exports only the first coverage of the multiple coverages defined"
+                            }
+                        }
+                    ],
+                    "selectBlank": false,
+                    "selectError": false
+                }
+            ],
+            "mode": "record-based"
+        },
+        "columnName": "Alma_Holdings_Start_Date",
+        "expression": "grel:value+\"|Other holdings range(s) not exported\"",
+        "onError": "keep-original",
+        "repeat": false,
+        "repeatCount": 10,
+        "description": "For titles where ``Other_Coverage_Notices`` indicates other coverage ranges weren't downloaded, add a pipe and the message `Other holdings range(s) not exported` to the end of ``Alma_Holdings_Start_Date``"
+    },
+    {
+        "op": "core/text-transform",
+        "engineConfig": {
+            "facets": [
+                {
+                    "type": "list",
+                    "name": "Other_Coverage_Notices",
+                    "expression": "value",
+                    "columnName": "Other_Coverage_Notices",
+                    "invert": false,
+                    "omitBlank": false,
+                    "omitError": false,
+                    "selection": [
+                        {
+                            "v": {
+                                "v": "Exports only the first coverage of the multiple coverages defined",
+                                "l": "Exports only the first coverage of the multiple coverages defined"
+                            }
+                        }
+                    ],
+                    "selectBlank": false,
+                    "selectError": false
+                }
+            ],
+            "mode": "record-based"
+        },
+        "columnName": "Alma_Holdings_End_Date",
+        "expression": "grel:value+\"|Other holdings range(s) not exported\"",
+        "onError": "keep-original",
+        "repeat": false,
+        "repeatCount": 10,
+        "description": "For titles where ``Other_Coverage_Notices`` indicates other coverage ranges weren't downloaded, add a pipe and the message `Other holdings range(s) not exported` to the end of ``Alma_Holdings_End_Date``"
+    },
+    {
+        "op": "core/column-addition",
+        "engineConfig": {
+            "facets": [],
+            "mode": "record-based"
+        },
+        "baseColumnName": "EBSCO_Holdings_Start_Date",
+        "expression": "grel:if(and(value==cells.Alma_Holdings_Start_Date.value,cells.EBSCO_Holdings_End_Date.value==cells.Alma_Holdings_End_Date.value),forEachIndex(cells.EBSCO_Holdings_Start_Date.value.split(\"|\"),i,value,if(isError(value.toDate('yyyy-MM-dd')),value,value.toDate('yyyy-MM-dd').toString(\"yyyy-MM-dd\"))+\" to \"+if(isError(cells.Alma_Holdings_End_Date.value.split(\"|\")[i].toDate('yyyy-MM-dd')),cells.Alma_Holdings_End_Date.value.split(\"|\")[i],cells.Alma_Holdings_End_Date.value.split(\"|\")[i].toDate('yyyy-MM-dd').toString('yyyy-MM-dd'))).join(\"|\"),if(or(value==cells.Alma_Holdings_Start_Date.value,cells.EBSCO_Holdings_End_Date.value==cells.Alma_Holdings_End_Date.value),if(value==cells.Alma_Holdings_Start_Date.value,\"Start date match\",\"End date match\"),\"No match\"))",
+        "onError": "set-to-blank",
+        "newColumnName": "Holdings_Dates",
+        "columnInsertIndex": 7,
+        "description": "Create column ``Holdings_Dates`` with the start and end holdings dates separated by `to` if both the beginning and ending holdings dates match (with multiple ranges separated by pipes), `Start date match` or `End date match` if only one sets of dates match, and `No match` if neither set of dates match"
+    }
+]
