@@ -8,3 +8,13 @@ This Docker image contains a program to compare the holdings in a CSV downloaded
 
 * Exit the container's bash shell with `exit`
 * Stop and destroy the container with `docker stop Compare_Holdings`
+
+
+## Questions
+### Regarding Program Functionality
+* Should the holdings dates be compared to Alma defaults?
+* In instances where a KBID matches multiple portfolios (a title change seems to create a new Alma title, and each title in a collection is its own portfolio)--how should evaluating these holdings and their date ranges be handled?
+* Should data other than holdings dates be compared?
+
+### Regarding Alma and This Program
+* If using local/custom dates is selected in Alma but no no dates are actually provided, are the default/global dates copied down to the local/custom dates section, or will Alma not not save the selection? If local dates are being used, will Alma allow for all the local date ranges to be deleted? Overall, can a situation arise where Alma says local/custom dates are being used, but there aren't any local/custom dates in Alma?
