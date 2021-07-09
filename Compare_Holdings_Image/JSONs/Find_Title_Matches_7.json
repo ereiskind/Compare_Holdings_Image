@@ -1,5 +1,38 @@
 [
     {
+        "op": "core/column-addition",
+        "engineConfig": {
+            "facets": [
+                {
+                    "type": "list",
+                    "name": "Portfolio_ID",
+                    "expression": "isBlank(value)",
+                    "columnName": "Portfolio_ID",
+                    "invert": false,
+                    "omitBlank": false,
+                    "omitError": false,
+                    "selection": [
+                        {
+                            "v": {
+                                "v": true,
+                                "l": "true"
+                            }
+                        }
+                    ],
+                    "selectBlank": false,
+                    "selectError": false
+                }
+            ],
+            "mode": "record-based"
+        },
+        "baseColumnName": "KBID",
+        "expression": "grel:cell.cross(\"%\",\"KBID\").cells.Portfolio_ID.value.uniques().join(\"|\")",
+        "onError": "set-to-blank",
+        "newColumnName": "temp",
+        "columnInsertIndex": 1,
+        "description": "For records without portfolio IDs, create column ``temp`` with all the portfolio IDs matching the KBID separated by pipes"
+    },
+    {
         "op": "core/text-transform",
         "engineConfig": {
             "facets": [

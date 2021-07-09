@@ -11,5 +11,76 @@
         "repeat": false,
         "repeatCount": 10,
         "description": "Remove parameter key `jkey` and unescape URL encodings in column ``URL_Identifier``"
+    },
+    {
+        "op": "core/column-addition",
+        "engineConfig": {
+            "facets": [
+                {
+                    "type": "list",
+                    "name": "KBID",
+                    "expression": "isBlank(value)",
+                    "columnName": "KBID",
+                    "invert": false,
+                    "omitBlank": false,
+                    "omitError": false,
+                    "selection": [
+                        {
+                            "v": {
+                                "v": true,
+                                "l": "true"
+                            }
+                        }
+                    ],
+                    "selectBlank": false,
+                    "selectError": false
+                }
+            ],
+            "mode": "record-based"
+        },
+        "baseColumnName": "URL_Identifier",
+        "expression": "grel:cell.cross(\"%\",\"URL\").cells.KBID.value.uniques().join(\"|\")",
+        "onError": "set-to-blank",
+        "newColumnName": "URL_Match",
+        "columnInsertIndex": 2,
+        "description": "Create column ``URL_Match`` with all of the the KBIDs matching the record's ``URL_Identifier`` value for those records that don't already have a KBID match"
+    },
+    {
+        "op": "core/text-transform",
+        "engineConfig": {
+            "facets": [
+                {
+                    "type": "list",
+                    "name": "KBID",
+                    "expression": "isBlank(value)",
+                    "columnName": "KBID",
+                    "invert": false,
+                    "omitBlank": false,
+                    "omitError": false,
+                    "selection": [
+                        {
+                            "v": {
+                                "v": true,
+                                "l": "true"
+                            }
+                        }
+                    ],
+                    "selectBlank": false,
+                    "selectError": false
+                }
+            ],
+            "mode": "record-based"
+        },
+        "columnName": "KBID",
+        "expression": "grel:cells.URL_Match.value",
+        "onError": "keep-original",
+        "repeat": false,
+        "repeatCount": 10,
+        "description": "In records with no KBID, add values from ``URL_Match`` into column ``KBID``"
+    },
+    {
+        "op": "core/column-removal",
+        "columnName": "URL_Match",
+        "description": "Remove column ``URL_Match``"
     }
 ]

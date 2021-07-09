@@ -1,5 +1,18 @@
 [
     {
+        "op": "core/column-addition",
+        "engineConfig": {
+            "facets": [],
+            "mode": "record-based"
+        },
+        "baseColumnName": "All ISSN",
+        "expression": "grel:cell.cross(\"%\",\"ISSN\").cells.KBID.value.uniques().join(\"|\")",
+        "onError": "set-to-blank",
+        "newColumnName": "KBID",
+        "columnInsertIndex": 1,
+        "description": "Create column ``KBID`` with the KBID for the ISSN in that row with multiples separated by pipes"
+    },
+    {
         "op": "core/text-transform",
         "engineConfig": {
             "facets": [],

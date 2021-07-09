@@ -5,6 +5,162 @@
             "facets": [],
             "mode": "record-based"
         },
+        "baseColumnName": "KBID",
+        "expression": "grel:cell.cross(\"%\",\"KBID\").cells.Title.value[0]",
+        "onError": "set-to-blank",
+        "newColumnName": "HM_Title",
+        "columnInsertIndex": 4,
+        "description": "Create column ``HM_Title`` with the title for the KBID"
+    },
+    {
+        "op": "core/column-addition",
+        "engineConfig": {
+            "facets": [],
+            "mode": "record-based"
+        },
+        "baseColumnName": "KBID",
+        "expression": "grel:cell.cross(\"%\",\"KBID\").cells.ISSN.value[0]",
+        "onError": "set-to-blank",
+        "newColumnName": "HM_ISSN",
+        "columnInsertIndex": 6,
+        "description": "Create column ``HM_ISSN`` with the ISSNs for the KBID"
+    },
+    {
+        "op": "core/column-addition",
+        "engineConfig": {
+            "facets": [],
+            "mode": "record-based"
+        },
+        "baseColumnName": "KBID",
+        "expression": "grel:cell.cross(\"%\",\"KBID\").cells.Local_Start_Date.value[0]",
+        "onError": "set-to-blank",
+        "newColumnName": "HM_Local_Start_Date",
+        "columnInsertIndex": 8,
+        "description": "Create column ``HM_Local_Start_Date`` with the local/custom start date for the KBID"
+    },
+    {
+        "op": "core/column-addition",
+        "engineConfig": {
+            "facets": [],
+            "mode": "record-based"
+        },
+        "baseColumnName": "KBID",
+        "expression": "grel:cell.cross(\"%\",\"KBID\").cells.Local_End_Date.value[0]",
+        "onError": "set-to-blank",
+        "newColumnName": "HM_Local_End_Date",
+        "columnInsertIndex": 10,
+        "description": "Create column ``HM_Local_End_Date`` with the local/custom end date for the KBID"
+    },
+    {
+        "op": "core/column-addition",
+        "engineConfig": {
+            "facets": [],
+            "mode": "record-based"
+        },
+        "baseColumnName": "KBID",
+        "expression": "grel:cell.cross(\"%\",\"KBID\").cells.Local_Embargo.value[0]",
+        "onError": "set-to-blank",
+        "newColumnName": "HM_Local_Embargo",
+        "columnInsertIndex": 12,
+        "description": "Create column ``HM_Local_Embargo`` with the local/custom embargo for the KBID"
+    },
+    {
+        "op": "core/column-addition",
+        "engineConfig": {
+            "facets": [],
+            "mode": "record-based"
+        },
+        "baseColumnName": "KBID",
+        "expression": "grel:cell.cross(\"%\",\"KBID\").cells.Default_Start_Date.value[0]",
+        "onError": "set-to-blank",
+        "newColumnName": "HM_Default_Start_Date",
+        "columnInsertIndex": 14,
+        "description": "Create column ``HM_Default_Start_Date`` with the default/global start date for the KBID"
+    },
+    {
+        "op": "core/column-addition",
+        "engineConfig": {
+            "facets": [],
+            "mode": "record-based"
+        },
+        "baseColumnName": "KBID",
+        "expression": "grel:cell.cross(\"%\",\"KBID\").cells.Default_End_Date.value[0]",
+        "onError": "set-to-blank",
+        "newColumnName": "HM_Default_End_Date",
+        "columnInsertIndex": 16,
+        "description": "Create column ``HM_Default_End_Date`` with the default/global end date for the KBID"
+    },
+    {
+        "op": "core/column-addition",
+        "engineConfig": {
+            "facets": [],
+            "mode": "record-based"
+        },
+        "baseColumnName": "KBID",
+        "expression": "grel:cell.cross(\"%\",\"KBID\").cells.Default_Embargo.value[0]",
+        "onError": "set-to-blank",
+        "newColumnName": "HM_Default_Embargo",
+        "columnInsertIndex": 18,
+        "description": "Create column ``HM_Default_Embargo`` with the global/default embargo for the KBID"
+    },
+    {
+        "op": "core/column-addition",
+        "engineConfig": {
+            "facets": [],
+            "mode": "record-based"
+        },
+        "baseColumnName": "KBID",
+        "expression": "grel:cell.cross(\"%\",\"KBID\").cells.Publisher.value[0]",
+        "onError": "set-to-blank",
+        "newColumnName": "HM_Publisher",
+        "columnInsertIndex": 22,
+        "description": "Create column ``HM_Publisher`` with the publisher for the KBID"
+    },
+    {
+        "op": "core/column-addition",
+        "engineConfig": {
+            "facets": [],
+            "mode": "record-based"
+        },
+        "baseColumnName": "KBID",
+        "expression": "grel:cell.cross(\"%\",\"KBID\").cells.URL.value[0]",
+        "onError": "set-to-blank",
+        "newColumnName": "HM_URL",
+        "columnInsertIndex": 25,
+        "description": "Create column ``HM_URL`` with the URL for the KBID"
+    },
+    {
+        "op": "core/column-addition",
+        "engineConfig": {
+            "facets": [],
+            "mode": "record-based"
+        },
+        "baseColumnName": "KBID",
+        "expression": "grel:cell.cross(\"%\",\"KBID\").cells.DOI.value[0]",
+        "onError": "set-to-blank",
+        "newColumnName": "HM_DOI",
+        "columnInsertIndex": 26,
+        "description": "Create column ``HM_DOI`` with the DOI for the KBID"
+    },
+    {
+        "op": "core/column-addition",
+        "engineConfig": {
+            "facets": [],
+            "mode": "record-based"
+        },
+        "baseColumnName": "KBID",
+        "expression": "grel:cell.cross(\"%\",\"KBID\").cells.Resource_Type.value[0]",
+        "onError": "set-to-blank",
+        "newColumnName": "HM_Resource_Type",
+        "columnInsertIndex": 28,
+        "description": "Create column ``HM_Resource_Type`` with the resource type for the KBID"
+    },
+    {
+        "op": "core/column-addition",
+        "engineConfig": {
+            "facets": [],
+            "mode": "record-based"
+        },
         "baseColumnName": "HM_Local_Start_Date",
         "expression": "grel:if(isNull(value),cells.HM_Default_Start_Date.value,value)",
         "onError": "set-to-blank",
