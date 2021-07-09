@@ -6,18 +6,13 @@ from tkinter import ttk
 # The functions work when there's only print statements before and after, but not messageboxes; adding print statements between doesn't help
 #ToDo: Figure out what's going on
 
-def CreateJSONDisplay(JSON_file, project_name=False):
-    """Creates a dialog box with a JSON that includes a project name that can be copied and a button for continuing on to the next part of the instructions."""
+def CreateJSONDisplay(JSON_text):
+    """Creates a dialog box containing text that can be copied and a button for continuing on to the next part of the instructions."""
     root = tkinter.Tk()
-    JSON_file_path = Path('Compare_Holdings_Image', 'JSONs', JSON_file)
 
-    JSON_text = tkinter.Text(root)
-    JSON_text.pack()
-    with open(JSON_file_path) as JSON_IO:
-        JSON_IO_text = JSON_IO.read()
-        if project_name:
-            JSON_IO_text = JSON_IO_text.replace("%", project_name)
-        JSON_text.insert("1.0", JSON_IO_text)
+    JSON_textbox = tkinter.Text(root)
+    JSON_textbox.pack()
+    JSON_textbox.insert("1.0", JSON_text)
 
     continue_button = ttk.Button(
         root,
